@@ -1,0 +1,632 @@
+- [Java编程思想](#java编程思想)
+
+  - [01 第一章-对象导论](#01)
+
+    - [1.1-1.6](#11-16)
+    - [1.7 伴随多态的可互换对象](#17)
+    - [1.9 容器](#19)
+    - [1.10 对象的创建和生命期](#110)
+    - [1.13.2 客户端编程](#1132)
+
+  - [02 第二章 一切都是对象](#02)
+
+    - [2.2 储存区](#22)
+    - [2.8 帮助文档javadoc](#28)
+
+  - [03 第三章 操作符](#03)
+
+  - [04 第四章 控制执行流程](#04)
+
+  - [05 第五章 初始化与清理(重点)*](#05)
+
+    - [5.5 清理：终结处理和垃圾回收 *](#55)
+
+    - [5.5.3 finalize()调用实验](#553)
+
+    - [5.5.4 垃圾回收器如何工作](#554)
+
+    - [5.7 构造器初始化](#57)
+
+    - [5.9 枚举类型](#59)
+
+  - [06 第六章 访问权限控制](#06)
+
+# Java编程思想
+
+## 01 第一章-对象导论
+
+### 1.1-1.6
+
+- 如果组合是动态发生的，那么它通常被称为聚合（aggregation）。组合经常被视为"has a"（拥有）关系，就行我们常说的"汽车拥有引擎"一样。以下是组合关系UML图，没有菱形的线表示关联。p6 ![组合关系](assets/ThinkingInJava-a0ac9.png)
+- 继承关系UML表示，is-a or is-like-a,p6<br>
+  ![继承关系](assets/ThinkingInJava-86778.png)
+
+### 1.7 伴随多态的可互换对象
+
+前期绑定，后期绑定。p9
+
+### 1.9 容器
+
+ArrayList和LinkedList都具有相同接口和外部行为，但在ArrayList中随机访问元素是一个花费固定时间的操作，LinkedList则是随机选取元素需要在列表中移动，访问越靠近表尾的元素花费的时间越长。另一方面，如果想在序列中插入一个元素，LinkedList的开销却比ArrayList要小。p12
+
+### 1.10 对象的创建和生命期
+
+**堆栈**
+
+- 优点：具有最大的执行速度，其中对象的存储空间和生命周期可以在编程时确定，存储空间的分配和释放置于优先考虑的位置。
+- 缺点：灵活性不够，必须在编程时知道对象的确切数量、生命周期和类型。
+
+**堆**
+
+- 优点：动态创建对象，直到运行时才在堆中分配空间。灵活。
+- 缺点：需要大量时间在堆中分配空间，可能远远大于在堆栈中创建储存空间。 p13
+
+### 1.13.2 客户端编程
+
+- JavaScript是一种在Web浏览器上不需要任何插件的情况下就可以支持的脚本语言。
+- applet是只在Web浏览器中运行的小程序，它作为网页的一部分而自动下载。
+- .NET平台大致相当于Java虚拟机和Java类库。
+- Intranet企业内部网
+
+## 02 第二章 一切都是对象
+
+### 2.2 储存区
+
+- 寄存器：最快的储存区，因为它位于处理器内部，但数量及其有限。
+- 堆栈：位于通用RAM(随机访问储存器)，通过堆栈指针可以从处理器获得直接支持，堆栈指针下移则分配新内存，反之释放内存，先进后出。速度仅次于寄存器。联系1.10堆与堆栈的优缺点。对象引用位于堆栈，但对象不存储与其中。
+- 堆：也位于RAM区，用于存放所有java对象。只有当new一个对象时才分配，堆的分配和清理比堆栈需要更多时间。 p22
+- 创建一个数组对象实际上就是创建一个引用数组，每个引用都会自动被初始化为null，一旦java看到null就知道这个引用还没指向某个对象。
+- 字符串中每个字符的尺寸都是16位或2个字节，以此来提供对Unicode字符集的支持。
+
+### 2.8 帮助文档
+
+- @see
+
+## 03 第三章 操作符
+
+- 别名现象：两个变量名指向同一个储存空间
+- Random的使用
+
+  ```java
+  Random r = new Random(47);//47是随机数生成器的种子，对于特定的种子值总是产生相同随机数列
+  int i = r.nextInt(100); //100表示生成[0,100)区间内的随机整数
+  double d = r.nextDouble(); //产生[0,1.0);直接的double；
+  ```
+
+- ==和!=是比较对象的引用，equal()默认也是比较对象的引用，但可以重写覆盖equal()方法使其比较两个值
+
+- Integer.toBinaryString(100);返回100的二进制表示，返回的是字符串。
+
+- 二进制没有特殊表示，八进制以0开头，十六进制以0x（x大小写都可以）开头。
+
+- 指数记数法：float fl = 1.39e-43f，double d = 47e47d(有没有d都一样)
+
+- > > ：有符号右移，若符号为正，高位补0，若符号为负，高位补1；10>>=2表示10向有符号右移2位
+
+- > > > ：无符号右移，无论正负高位都补0；10>>>=2，表示10无符号右移2位。
+
+- char、byte、short类型的数值进行位移之前都会转为int类型，得到的结果也都转为int类型。只有数值右端的低五位才有用。
+
+## 04 第四章 控制执行流程
+
+- 逗号操作符：for(int i,int j;i<5;i++,j*2)()
+- Foreach语法：for(float x : f)()
+- 标签：在标签与迭代直接不宜插入任何语句。continue label1同时中断内部迭代以及外部迭代，直接转到label1，随后它实际上是继续迭代过程，但从外部迭代开始。break label1也会中断所有迭代，并回到label1处，但是不重新进入迭代。
+
+## 05 第五章 初始化与清理(重点)*
+
+- 一个类文件只能有一个公共类，该公共类的每次必须与文件名相同；
+- 构造器的首字母大写，与其他方法名称不同；
+- 创建一个对象就是给此对象分配到的储存空间取一个名字；
+- 即使参数列表包含的参数相同，但是顺序不同也是不一样的函数；
+- 如果传入的数据类型（实际参数类型）小于方法中声明的形式参数类型，实际参数数据类型就会被提升。char型略有不同，如果无法找到恰好接收char参数的方法，就会把char直接提升至int；
+- 重载只区分类名和方法的形参列表，不考虑用方法的返回值来区分；
+- 除构造器之外，编译器禁止在其他任何方法中调用构造器；
+
+### 5.5 清理：终结处理和垃圾回收*
+
+- 垃圾回收只知道释放由new分配的内存，有些不由new分配的特殊内存区域需要用特殊的方法处理。如：finalize().<br>
+  **finalize()的工作原理：** 一旦JVM准备好释放对象占用的储存空间，将首先调用其finalize()方法，并且在下一次垃圾回收动作发送时才会真正回收对象占用的内存。
+
+> 参考[Java中的finalize()用法](http://blog.csdn.net/shanghui815/article/details/6787855),但其中提到"finalize相当于析构函数"与TIJ在本章中提及的有出入，原因是C++的析构函数一定会销毁对象，而finalize()不一定。即：
+
+> 1. 对象可能不被垃圾回收。
+> 2. 垃圾回收并不等于"析构"。
+> 3. 垃圾回收置于内存有关。
+
+>   > finalize()在什么时候被调用?<br>
+>   > 有三种情况<br>
+>   > 1.所有对象被Garbage Collection时自动调用,比如运行System.gc()的时候；<br>
+>   > 2.程序退出时为每个对象调用一次finalize方法；<br>
+>   > 3.显式的调用finalize方法；<br><br>
+>   > 一般的纯Java编写的Class不需要重新覆盖这个方法，因为Object已经实现了一个默认的，除非我们要实现特殊的功能。要给一个类增加收尾（finalizer ），你只要定义finalize ( ) 方法即可。Java 回收该类的一个对象时，就会调用这个方法。<br>
+>   > finalize()方法的通用格式如下：
+
+>   > ```java
+>   > protected void finalize( )
+>   > {
+>   > // finalization code here
+>   > }
+>   > ```
+
+>   > 关键字protected是防止在该类之外定义的代码访问finalize()标识符。
+
+### 5.5.3 finalize()调用实验
+
+```java
+//: initialization/TerminationCondition.java
+// Using finalize() to detect an object that
+// hasn’t been properly cleaned up.
+class Book {
+boolean checkedOut = false;
+Book(boolean checkOut) {
+checkedOut = checkOut;
+}
+void checkIn() {
+checkedOut = false;
+}
+protected void finalize() {
+if(checkedOut)
+System.out.println("Error: checked out");
+// Normally, you’ll also do this:
+// super.finalize(); // Call the base-class version
+}
+}
+public class TerminationCondition {
+public static void main(String[] args) {
+Book novel = new Book(true);
+// Proper cleanup:
+novel.checkIn();
+// Drop the reference, forget to clean up:
+new Book(true); //不可达对象，没有为内存空间取一个对象名称，所以无法调用这个对象，会被垃圾回收器清除。
+// Force garbage collection(gc) & finalization:
+System.gc();
+}
+} /* Output:
+Error: checked out
+*///:~
+```
+
+System.gc()：作用只是提醒JVM，程序员希望进行一次垃圾回收，但它不能保证一定进行垃圾回收，不要频繁使用System.gc()，把不用的变量置为null，JVM会自行清理。如果JVM并未面临内存耗尽的情形，它是不会浪费时间去执行垃圾回收以恢复内存的。
+
+**练习10**
+
+```java
+// initialization/TerminationConditionEx.java
+// TIJ4 Chapter Initialization, Exercise 10, page 177
+/* Create a class with a finalize() method that prints a message. In main(),
+* create an object of your class. Explain the behavior of your program.
+*/  
+
+class WebBank {
+    boolean loggedIn = false;
+    WebBank(boolean logStatus) {
+        loggedIn = logStatus;
+    }
+    void logIn() {
+        loggedIn = true;
+    }
+    void logOut() {
+        loggedIn = false;
+    }
+    protected void finalize() {
+        if(loggedIn)
+            System.out.println("Error: still logged in");
+        // Normally, you'll also do this:
+        // super.finalize(); // Call the base-class version
+    }
+}
+
+public class TerminationConditionEx {
+    public static void main(String[] args) {
+        WebBank bank1 = new WebBank(true);
+        WebBank bank2 = new WebBank(true);
+        // Proper cleanup: log out of bank1 before going home
+        bank1.logOut();
+        // Drop the reference, forget to cleanup:
+        new WebBank(true);
+        // Force garbage collection and finalization:
+        System.gc();
+    }    
+}
+```
+
+```java
+output:
+Error: still logged in
+```
+
+**练习11**
+修改前一个练习，让finalize)()总会被调用。以下实验说明System.runFinalization();和Runtime.getRuntime().runFinalization();不总会调用finalize()。
+虽然bank2为logOut，loggedIn仍然为true，但是未被视为垃圾，不会被垃圾回收。但是new WebBank(true);是不可达对象，会被视为垃圾，所以会被回收，因此只调用了一次finalize()，只输出一条Error: still logged in指令。为了验证这条信息是由// Drop the reference, forget to cleanup:下的 new WebBank(true);发出的，可以将其改为new WebBank(false);，运行后将没有信息输出。
+
+
+```java
+// initialization/BankTest.java
+// TIJ4 Chapter Initialization, Exercise 11, page 177
+// Modify the previous exercise so that finalize() will always be called.
+class WebBank {
+  boolean loggedIn = false;
+  WebBank(boolean logStatus) {
+    loggedIn = logStatus;
+  }
+  void logOut() {
+    loggedIn = false;
+  }
+  protected void finalize() {
+    if(loggedIn)
+      System.out.println("Error: still logged in");
+    // Normally, you'll also call the base-class version:
+    // super.finalize();
+  }
+}
+
+public class BankTest {
+  public static void main(String[] args) {
+    WebBank bank1 = new WebBank(true);
+    WebBank bank2 = new WebBank(true);
+    new WebBank(true);
+    // Proper cleanup: log out of bank1 before going home:
+    bank1.logOut();
+    // Forget to logout of bank2 and unnamed new bank
+    // Attempts to finalize any missed banks:
+    System.out.println("Try 1: ");
+    System.runFinalization();
+    System.out.println("Try 2: ");  
+    Runtime.getRuntime().runFinalization();
+    System.out.println("Try 3: ");
+    System.gc();
+    System.out.println("Try 4: ");
+    // using deprecated since 1.1 method:
+    System.runFinalizersOnExit(true);   
+  }
+}
+```
+
+```java
+//output:
+Try 1:
+Try 2:
+Try 3:
+Try 4:
+Error: still logged in
+Error: still logged in
+或者
+Try 1:
+Try 2:
+Try 3:
+Error: still logged in
+Try 4:
+Error: still logged in
+```
+
+若将System.runFinalizersOnExit(true); 去掉，输出以下结果。说明System.gc()不是立即调用finalize()，但是在调用System.runFinalizersOnExit(true); 之后，如果有垃圾对象， System.gc()肯定会调用finalize()；
+
+```java
+Try 1:
+Try 2:
+Try 3:
+Try 4:
+Error: still logged in
+或者
+Try 1:
+Try 2:
+Try 3:
+Error: still logged in
+Try 4:
+```
+
+若将new bank（true）；去掉，
+
+```java
+Try 1:
+Try 2:
+Try 3:
+Try 4:
+Error: still logged in
+```
+
+说明runFinalizersOnExit(true)总会调用finalize()；而System.gc()则只有在内存满的时候才会调用finalize()。但runFinalizersOnExit从1.1之后就已经过时了。
+
+**练习12**
+
+```java
+// initialization/TankTest.java
+// TIJ4 Chapter Initialization, Exercise 12, page 177
+/* Create a class called Tank that can be filled and emptied, and has a
+* termination condition that it must be empty when the object is cleaned up.
+* Write a finalize() that verifies this termination condition. In main(), test
+* the possible scenarios that can occur whtn your Tank is used.
+*/
+class Tank {
+  int howFull = 0;
+  Tank() { this(0); }
+  Tank(int fullness) {
+    howFull = fullness;   
+  }
+  void sayHowFull() {
+    if(howFull == 0) System.out.println("Tank is empty");
+    else System.out.println("Tank filling status = " + howFull);
+  }
+  void empty() {
+    howFull = 0;
+  }
+  protected void finalize() {
+    if(howFull != 0)
+      System.out.println("Error: Tank not empty");
+    // Normally, you'll also do this:
+    // super.finalize(); // Call the base-class version
+  }
+}
+
+public class TankTest {
+  public static void main(String[] args) {
+    Tank tank1 = new Tank();
+    Tank tank2 = new Tank(3);
+    Tank tank3 = new Tank(5);
+    // Proper cleanup: empty tank before going home
+    tank2.empty();
+    // Drop the reference, forget to cleanup:
+    new Tank(6);
+    System.out.println("Check tanks:");
+    System.out.println("tank1: ");
+    tank1.sayHowFull();
+    System.out.println("tank2: ");
+    tank2.sayHowFull();
+    System.out.println("tank3: ");
+    tank3.sayHowFull();
+    System.out.println("first forced gc():");
+    System.gc();
+    // Force finalization on exit but using method
+    // deprecated since JDK 1.1:
+    System.out.println("try deprecated runFinalizersOnExit(true):");
+    System.runFinalizersOnExit(true);
+    System.out.println("last forced gc():");
+    System.gc();
+  }
+}
+```
+
+```java
+Check tanks:
+tank1:
+Tank is empty
+tank2:
+Tank is empty
+tank3:
+Tank filling status = 5
+first forced gc():
+Error: Tank not empty
+try deprecated runFinalizersOnExit(true):
+last forced gc():
+Error: Tank not empty
+或
+Check tanks:
+tank1:
+Tank is empty
+tank2:
+Tank is empty
+tank3:
+Tank filling status = 5
+first forced gc():
+try deprecated runFinalizersOnExit(true):
+Error: Tank not empty
+last forced gc():
+Error: Tank not empty
+```
+
+将最后的System.gc();去掉，输出结果仍然不变。
+
+
+### 5.5.4 垃圾回收器如何工作
+
+- Java从堆分配空间的速度可以和其他语言从堆栈上分配空间的速度相媲美。
+- 在某些JVM中，堆的实现截然不同：它更像传送带，java的堆指针只是简单地移动到尚未分配的区域，其效率比得上C++在堆栈上分配空间的效率。但java的堆未必完全像传送带那样工作，当它工作时，一面回收空间，一面使堆中的对象紧凑排列。
+
+**其他系统中的垃圾回收机制**：
+
+1. 引用记数：简单但速度慢，当引用连接至新对象时引用记数+1，引用离开作用域或者被置为null时引用记数-1 。垃圾回收器会在含有全部兑现的列表上遍历，当发现某个对象的引用记数为0时就会释放其所占用的空间。缺陷：如果对象之间存在循环引用，可能会出现对象应该被回收但是引用记数不为0.
+2. 溯源：对任何活的对象，一定能最终追溯到其存活在堆栈或静态储存区之中的引用。
+
+JVM使用第二种方式，采用自适应（根据情况自动切换模式）的垃圾回收技术，至于如何找到存活对象取决于不同的JVM实现。
+
+- 模式一：停止-复制。先暂停程序的运行，然后将所有存活对象从当前堆复制到另一个堆，没有被复制的全是垃圾，当对象被复制到新的堆时就说紧凑排序的。
+- 模式二：标记-清扫。要是没有新垃圾产生，就会转到这种工作模式，速度相当慢，但是当你知道只会产生少量垃圾甚至不会产生垃圾时，它的速度就很快了。它的思路是：从堆栈和静态储存区出发，遍历所有引用，进而找出所有存活对象并标记，全部标记完了才开始清理，但是剩下的堆空间是不连续的。这种模式也必须在程序暂停的情况下才能进行。
+
+### 5.7 构造器初始化
+
+- 初始化顺序：变量-->构造器-->其他函数。
+- 即使没有显示地使用static关键字，构造器实际上也是静态方法。
+- Arrays.toString()；
+
+  ```
+  int[] a = { 0, 1 ,2};
+  Arrays.toString(a);// { 0, 1 ,2}
+  ```
+
+- 对象的默认toString方式打印的是类名@对象地址
+
+- 可变参数列表,例如：void m（Object... args），void f(int i, String... s)
+
+- getClass方法属于Object的一部分，例如，Integer a; System.out.println(a.getClass());将打印出class java.lang.Integer
+
+### 5.9 枚举类型
+
+```java
+enum En{//首字母大写
+    //由于枚举类型的实例是常量，因此按照命名惯例它们都用大写字母表示，如果再一个名字中有多个单词，用下划线将它们隔开。
+    AB,BC,CD,DE
+}
+public class testEn{
+    En aa = En.BC;
+    JOptionPane.showMessageDialog(null,aa);//用对话框输出为BC。
+    for( En a : En.values())
+        System.out.println(s+ ", ordinal " + a.ordinal());
+        //output:
+       // AB, ordinal 0
+        //BC, ordinal 1
+        //CD, ordinal 2
+        //DE, ordinal 3
+}
+```
+
+编译器会自动添加一些特性，例如会创建toString()方法一遍打印，还会创建ordinal()来表明某特定enum常量的声明顺序，以及static values()方法来按照enum常量的声明顺序产生由这些常量值构成的数组。
+
+- enum与switch是绝佳的组合。
+
+## 06 访问权限控制
+- 重构即重写代码，以使得它更可读，更易理解，并且更具有可维护性。
+- 权限由大到小排序：public、protect、包访问权限、private。
+- 当编译一个java源代码文件时，此文件通常被称为编译单元。每个编译单元都必须有一个后缀名.java，而在编译单元内则可以有一个public类，该类的名称必须与文件的名称相同，每个编译单元只有有一个public类，否则编译器就不会接受，如果在该编译单元之中还有额外的类的话，那么在包之外的世界是无法看见这些类的，因为它们不是public类，而且它们主要用来为主public类提供支持。
+- 每个.java文件编译完会有一个.cass输出文件。
+- package的第一部分是类的创建者的反顺序Internet域名。
+- 从根目录开始，解释器获取包的名称并将每个句点替换成反斜杠。
+- 任何可以肯定只是该类的一个助手方法的方法都可以把它指定为private。
+- 类的访问权限只有两种，public或包访问。如果不希望其他任何人对该类拥有访问权限，可以把构造器指定为private，可以在该类的static成员内创建类。
+```
+//: access/Lunch.java
+// Demonstrates class access specifiers. Make a class
+// effectively private with private constructors:
+class Soup1 {
+private Soup1() {}
+// (1) Allow creation via static method:
+public static Soup1 makeSoup() {
+return new Soup1();
+}
+}
+class Soup2 {
+private Soup2() {}
+// (2) Create a static object and return a reference
+// upon request.(The "Singleton" pattern):
+private static Soup2 ps1 = new Soup2();
+public static Soup2 access() {
+return ps1;
+}
+public void f() {}
+}
+// Only one public class allowed per file:
+public class Lunch {
+void testPrivate() {
+// Can’t do this! Private constructor:
+//! Soup1 soup = new Soup1();
+}
+void testStatic() {
+Soup1 soup = Soup1.makeSoup();
+}
+void testSingleton() {
+Soup2.access().f();
+}
+} ///:~
+```
+## 07 复用类
+- 组合：在新的类中产生现有类的对象。
+- 每一个非基本类型的对象都有一个toString()方法，当编译器需要一个String而你却只有一个对象时，该方法便会被调用。
+- 在正要使用对象之前初始化引用叫惰性初始化。在生成对象不值得及不必要每次都生成对象的情况下，这种方式可以减少额外负担。
+- 每个类中都设置一个main()方法可以使每个类的单元测试都变得简单易行，在完成单元测试之后也无需删除main()可以待下次测试用。
+- 在子类中重载了基类的一个方法，子类仍然可以调用基类中的该方法。
+- @override 当想要覆写某个方法时，可以用这个注解，可以防止在不想重载时意外地进行重载。
+- 继承是is-a关系，组合是has-a关系。
+
+### 7.7.2 是否要继承
+- 问自己是否需要从新类向基类进行向上转型，如果必须向上转型则继承是必要的，否则最好用组合，因为组合更灵活。
+
+### 7.8 final关键字
+- 既是static又是final的域只占据一段不能改变的储存空间，这种变量用大写表示，下划线分隔。
+- 用于对象引用，final使引用恒定不变，一旦引用被初始化指向一个对象就无法再指向另外一个对象，但对象本身可修改。
+- 空白final必须在构造器中初始化。
+- 可以在参数列表中以声明的方式将参数指明为final，这意味着无法在方法中更改参数引用所指向的对象，即该对象在该方法中是只读的。
+```java
+//: reusing/FinalArguments.java
+// Using "final" with method arguments.
+class Gizmo {
+public void spin() {}
+}
+public class FinalArguments {
+void with(final Gizmo g) {
+//! g = new Gizmo(); // Illegal -- g is final
+}
+void without(Gizmo g) {
+g = new Gizmo(); // OK -- g not final
+g.spin();
+}
+// void f(final int i) { i++; } // Can’t change
+// You can only read from a final primitive:
+int g(final int i) { return i + 1; }
+public static void main(String[] args) {
+FinalArguments bf = new FinalArguments();
+```
+- 想要明确禁止覆盖时可以将方法设置为final；private方法隐式地指定为final，由于无法取用private方法，所以也无法覆盖。
+
+### 7.9.1 继承中的初始化顺序
+**基类中的static域（即static变量，不是static方法）-->子类的static域-->基类构造器-->子类的域（即变量）--子类构造器。**
+因为构造函数可以给变量赋值，所以变量初始化肯定在构造器之前。
+
+
+## 08 多态
+- OOP三个基本特征：抽象，继承，多态；
+- 多态的作用是消除类型间的耦合。
+- 实现基础：后期绑定；
+
+###  8.2 域和静态方法不是多态的
+- 任何域的访问操作都将由编译器解析，因此不是多态的。以下例子中，Super.field和Sub.field分配了不同的储存空间，因此，Sub实际上包含了两个称为field的域，它自己的和它从Super处得到的，然而在引用Sub.field时所产生的默认域不是Super的field域，要显示地Super.field才能得到。
+```java
+//: polymorphism/FieldAccess.java
+// Direct field access is determined at compile time.
+class Super {
+public int field = 0;
+public int getField() { return field; }
+}
+class Sub extends Super {
+public int field = 1;
+public int getField() { return field; }
+public int getSuperField() { return super.field; }
+}
+public class FieldAccess {
+public static void main(String[] args) {
+Super sup = new Sub(); // Upcast
+System.out.println("sup.field = " + sup.field +
+", sup.getField() = " + sup.getField());
+Sub sub = new Sub();
+System.out.println("sub.field = " +
+sub.field + ", sub.getField() = " +
+sub.getField() +
+", sub.getSuperField() = " +
+sub.getSuperField());
+}
+} /* Output:
+sup.field = 0, sup.getField() = 1
+sub.field = 1, sub.getField() = 1, sub.getSuperField() = 0
+*///:~
+```
+- 静态方法不具有多态性，取决于基类(即向上转型中的大的类)
+```java
+//: polymorphism/StaticPolymorphism.java
+// Static methods are not polymorphic.
+class StaticSuper {
+public static String staticGet() {
+  return "Base staticGet()";
+}
+public String dynamicGet() {
+return "Base dynamicGet()";
+}
+}
+class StaticSub extends StaticSuper {
+public static String staticGet() {
+return "Derived staticGet()";
+}
+public String dynamicGet() {
+return "Derived dynamicGet()";
+}
+}
+public class StaticPolymorphism {
+public static void main(String[] args) {
+StaticSuper sup = new StaticSub(); // Upcast
+System.out.println(sup.staticGet());
+System.out.println(sup.dynamicGet());
+}
+} /* Output:
+Base staticGet()
+Derived dynamicGet()
+*///:~
+```
+- 构造器实际上是隐式的static
