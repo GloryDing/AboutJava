@@ -1,32 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="fieldcomment_context" deleted="false" description="Comment for fields" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.fieldcomment" name="fieldcomment">/**
-* @Fields ${field} : ${todo}
-*/ </template><template autoinsert="false" context="delegatecomment_context" deleted="false" description="Comment for delegate methods" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.delegatecomment" name="delegatecomment"/><template autoinsert="false" context="constructorcomment_context" deleted="false" description="Comment for created constructors" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.constructorcomment" name="constructorcomment">/**
-* @Title
-* @Description
-* ${tags}
-*/</template><template autoinsert="false" context="filecomment_context" deleted="false" description="Comment for created Java files" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.filecomment" name="filecomment"/><template autoinsert="false" context="overridecomment_context" deleted="false" description="Comment for overriding methods" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.overridecomment" name="overridecomment">/**&#13;
- * @Method: ${enclosing_method} &#13;
- * @Description: ${todo}&#13;
- * ${tags} &#13;
- * ${see_to_overridden} &#13;
- */</template><template autoinsert="false" context="gettercomment_context" deleted="false" description="Comment for getter method" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.gettercomment" name="gettercomment">/**
-* @return ${bare_field_name}
-*/</template><template autoinsert="true" context="settercomment_context" deleted="false" description="Comment for setter method" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.settercomment" name="settercomment">/**
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="settercomment_context" deleted="false" description="Comment for setter method" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.settercomment" name="settercomment">/**
  * @param ${param} the ${bare_field_name} to set
- */</template><template autoinsert="false" context="typecomment_context" deleted="false" description="Comment for created types" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.typecomment" name="typecomment">/**
-* &lt;b&gt;Description:&lt;/b&gt;&lt;br&gt; 
-* @author &lt;a href="http://www.jianshu.com/users/1bda2d4550e2/latest_articles" target="_blank"&gt;${user}&lt;/a&gt;
-* @version 1.0
-* @Note
-* &lt;b&gt;ProjectName:&lt;/b&gt; ${project_name}
-* &lt;br&gt;&lt;b&gt;PackageName:&lt;/b&gt; ${package_name}
-* &lt;br&gt;&lt;b&gt;ClassName:&lt;/b&gt; ${type_name}
-* &lt;br&gt;&lt;b&gt;Date:&lt;/b&gt; ${date} ${time}
-*/</template><template autoinsert="false" context="methodcomment_context" deleted="false" description="Comment for non-overriding methods" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.methodcomment" name="methodcomment">/**
-* &lt;b&gt;Description:&lt;/b&gt;&lt;br&gt; 
-* ${tags}
-* @Note
-* &lt;b&gt;Author:&lt;/b&gt; &lt;a href="http://www.jianshu.com/users/1bda2d4550e2/latest_articles" target="_blank"&gt;LuoQ&lt;/a&gt;
-* &lt;br&gt;&lt;b&gt;Date:&lt;/b&gt; ${date} ${time}
-* &lt;br&gt;&lt;b&gt;Version:&lt;/b&gt; 1.0
-*/</template></templates>
+ */</template></templates>
